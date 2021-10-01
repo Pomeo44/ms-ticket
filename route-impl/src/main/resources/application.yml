@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: route
+
+  h2.console.enabled: true
+
+  datasource:
+    driverClassName: org.h2.Driver
+    url: "jdbc:h2:mem:testdb;\
+          INIT=CREATE SCHEMA IF NOT EXISTS ROUTE\\;SET SCHEMA ROUTE;"
+    username: sa
+    password:
+
+  liquibase:
+    enabled: true
+    parameters:
+      schema: route
+      text_array_type: ARRAY
+    change-log: db/changelog-master.xml
+
+  jpa:
+    hibernate.ddl-auto: none
+    show-sql: false
+
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+logging:
+  level:
+    ROOT: info
+    com.flixbus.route: debug

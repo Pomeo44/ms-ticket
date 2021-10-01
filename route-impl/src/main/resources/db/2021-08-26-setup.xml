@@ -1,0 +1,92 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ VTB Group. Do not reproduce without permission in writing.
+  ~ Copyright (c) 2021 VTB Group. All rights reserved.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="create_connection" author="Aleksandr_Antipin">
+        <createTable tableName="connection">
+            <column name="line_id" type="BIGINT" remarks="Line id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city1" type="VARCHAR(50)" remarks="City from">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city2" type="VARCHAR(50)" remarks="City to">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distance" type="DECIMAL(10,6)" remarks="Distance">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration" type="DECIMAL(10,6)" remarks="Duration">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_city_pair" author="Aleksandr_Antipin">
+        <sql>
+            ALTER TABLE connection ADD id VARCHAR(100) AS
+            case when city1 &lt; city2 then CONCAT(city1, city2) else CONCAT(city2, city1) end UNIQUE NOT NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="add_connection_pk" author="Aleksandr_Antipin">
+        <addPrimaryKey
+                columnNames="id"
+                constraintName="connection_pk"
+                tableName="connection"/>
+    </changeSet>
+
+    <changeSet id="add_constrains_on_same_city" author="Aleksandr_Antipin">
+        <sql>
+            ALTER TABLE connection ADD CONSTRAINT cities_check CHECK (city1 &lt;&gt; city2)
+        </sql>
+    </changeSet>
+
+    <changeSet id="create_bus_cost" author="Aleksandr_Antipin">
+        <createTable tableName="bus_cost">
+            <column name="line_id" type="BIGINT" remarks="ID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="bus_cost_pk"/>
+            </column>
+            <column name="bus_cost_per_km" type="DECIMAL(12,8)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_driver_cost" author="Aleksandr_Antipin">
+        <createTable tableName="driver_cost">
+            <column name="line_id" type="BIGINT" remarks="ID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="driver_cost_pk"/>
+            </column>
+            <column name="driver_cost_per_hr" type="DECIMAL(12,8)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="insert_data_to_connection" author="Aleksandr_Antipin">
+        <loadData
+                tableName="connection"
+                file="db/init-data/connection.csv"/>
+    </changeSet>
+
+    <changeSet id="insert_data_to_bus_cost" author="Aleksandr_Antipin">
+        <loadData
+                tableName="bus_cost"
+                file="db/init-data/bus_cost.csv"/>
+    </changeSet>
+
+    <changeSet id="insert_data_to_driver_cost" author="Aleksandr_Antipin">
+        <loadData
+                tableName="driver_cost"
+                file="db/init-data/driver_cost.csv"/>
+    </changeSet>
+
+</databaseChangeLog>

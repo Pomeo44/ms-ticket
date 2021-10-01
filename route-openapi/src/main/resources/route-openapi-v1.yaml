@@ -1,0 +1,61 @@
+openapi: 3.0.1
+info:
+  title: Route API
+  description: 'Route API'
+  version: 1.0.0
+servers:
+  - url: https://flixbus.com/route/api/v1
+tags:
+  - name: route
+    description: route
+paths:
+  /route:
+    get:
+      tags:
+        - route
+      summary: route
+      description: route
+      parameters:
+        - name: cityFrom
+          in: query
+          description: cityFrom
+          required: false
+          schema:
+            type: string
+        - name: cityTo
+          in: query
+          description: cityTo
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Seccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+        400:
+          description: Bad request
+          content: {}
+        500:
+          description: Bad request
+          content: {}
+components:
+  schemas:
+    Route:
+      description: Route
+      type: object
+      properties:
+        num_lines:
+          description: num_lines
+          type: integer
+        total_bus_cost:
+          description: total_bus_cost
+          type: double
+        total_driver_cost:
+          description: total_driver_cost
+          type: double
+        total_cost:
+          description: total_cost
+          type: double
