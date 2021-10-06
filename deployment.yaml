@@ -18,3 +18,5 @@ spec:
       - image: pomeo44/ms-ticket:38
         imagePullPolicy: Always
         name: ms-ticket
+        ports:
+        - containerPort: 8080
