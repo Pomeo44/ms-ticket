@@ -22,8 +22,6 @@ spring:
     hibernate.ddl-auto: none
     show-sql: false
 
-  autoconfigure.exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-
 logging:
   level:
     ROOT: info
