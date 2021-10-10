@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.flixbus.route.AbstractIntegrationTest;
+import com.flixbus.route.service.pathfinder.PathFinder;
 import com.flixbus.route.service.pathfinder.PathFinder.Path;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +24,18 @@ public class FloydWarshallAlgorithmPathFinderTest extends AbstractIntegrationTes
 
     @Test
     public void onePathTest() {
-        Optional<List<Path>> pathList = pathFinder.findPaths("Munich", "Stuttgart");
-        assertTrue(pathList.isPresent());
-        assertEquals(1, pathList.get().size());
-        assertEquals("Munich", pathList.get().get(0).getCityFrom());
-        assertEquals("Stuttgart", pathList.get().get(0).getCityTo());
+        Optional<List<PathFinder.Route>> routes = pathFinder.findRoutes("Munich", "Stuttgart");
+        assertTrue(routes.isPresent());
+        assertEquals(1, routes.get().size());
+        assertEquals("Munich", routes.get().get(0).getPaths().get(0).getCityFrom());
+        assertEquals("Stuttgart", routes.get().get(0).getPaths().get(0).getCityTo());
     }
 
     @Test
     public void manyPathsTest() {
-        Optional<List<Path>> pathListOptional = pathFinder.findPaths("Warsaw", "Amsterdam");
-        assertTrue(pathListOptional.isPresent());
-        List<Path> pathList = pathListOptional.get();
+        Optional<List<PathFinder.Route>> routeListOptional = pathFinder.findRoutes("Warsaw", "Amsterdam");
+        assertTrue(routeListOptional.isPresent());
+        List<Path> pathList = routeListOptional.get().get(0).getPaths();
         assertEquals(8, pathList.size());
         assertEquals("Warsaw", pathList.get(0).getCityFrom());
         assertEquals("Berlin", pathList.get(0).getCityTo());
@@ -56,8 +57,8 @@ public class FloydWarshallAlgorithmPathFinderTest extends AbstractIntegrationTes
 
     @Test
     public void pathNotExistTest() {
-        Optional<List<Path>> pathList = pathFinder.findPaths("Munich", "Madrid");
-        assertTrue(pathList.isEmpty());
+        Optional<List<PathFinder.Route>> routes = pathFinder.findRoutes("Munich", "Madrid");
+        assertTrue(routes.isEmpty());
     }
 
 

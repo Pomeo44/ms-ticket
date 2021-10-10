@@ -22,6 +22,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -65,7 +66,7 @@ public class RouteServiceImplTest {
         List<Path> pathList = List.of(
                 new Path(CITY_FROM, CITY_BETWEEN),
                 new Path(CITY_BETWEEN, CITY_TO));
-        when(pathFinder.findPaths(eq(CITY_FROM), eq(CITY_TO))).thenReturn(Optional.of(pathList));
+        when(pathFinder.findRoutes(eq(CITY_FROM), eq(CITY_TO))).thenReturn(Optional.of(Collections.singletonList(new PathFinder.Route(pathList))));
         when(connectionRepository.findAllById(eq(Set.of(CITY_FROM + CITY_BETWEEN, CITY_BETWEEN + CITY_TO))))
                 .thenReturn(List.of(
                         new Connection().setId(CITY_FROM + CITY_BETWEEN).setCity1(CITY_FROM).setCity2(CITY_BETWEEN).setDistance(DISTANCE12).setDuration(DURATION12).setLineId(LINE_1_ID),

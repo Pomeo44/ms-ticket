@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -43,11 +44,13 @@ public class RouteServiceImpl implements RouteService {
         Objects.requireNonNull(city1);
         Objects.requireNonNull(city2);
 
-        List<PathFinder.Path> paths = pathFinder.findPaths(city1, city2)
+        List<PathFinder.Route> routes = pathFinder.findRoutes(city1, city2)
                 .orElseThrow(() -> new IllegalArgumentException("Route doesn't exist"));
-        log.debug("findAndCalculateRoute() - found paths={}", paths);
+        log.debug("findAndCalculateRoute() - found paths={}", routes);
 
-        Set<String> connectionIds = paths.stream()
+        Set<String> connectionIds = routes.stream()
+                .map(PathFinder.Route::getPaths)
+                .flatMap(Collection::stream)
                 .map(path -> Connection.generateId(path.getCityFrom(), path.getCityTo()))
                 .collect(Collectors.toSet());
         List<Connection> connections = connectionRepository.findAllById(connectionIds);

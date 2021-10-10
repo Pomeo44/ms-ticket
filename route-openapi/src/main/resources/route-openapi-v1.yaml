@@ -9,7 +9,7 @@ tags:
   - name: route
     description: route
 paths:
-  /route:
+  /bestroute:
     get:
       tags:
         - route
@@ -41,6 +41,38 @@ paths:
         500:
           description: Bad request
           content: {}
+  /allroutes:
+    get:
+      tags:
+        - route
+      summary: allroutes
+      description: allroutes
+      parameters:
+        - name: cityFrom
+          in: query
+          description: cityFrom
+          required: false
+          schema:
+            type: string
+        - name: cityTo
+          in: query
+          description: cityTo
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Seccessful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Routes'
+        400:
+          description: Bad request
+          content: { }
+        500:
+          description: Bad request
+          content: { }
 components:
   schemas:
     Route:
@@ -59,3 +91,12 @@ components:
         total_cost:
           description: total_cost
           type: double
+    Routes:
+      description: Routes
+      type: object
+      properties:
+        routes:
+          description: routes
+          type: array
+          items:
+            $ref: "#/components/schemas/Route"

@@ -98,7 +98,7 @@ public class FloydWarshallAlgorithmPathFinder implements PathFinder {
     }
 
     @Override
-    public Optional<List<Path>> findPaths(String city1, String city2) {
+    public Optional<List<Route>> findRoutes(String city1, String city2) {
         log.debug("findPaths() - start: city1={}, city2={}", city1, city2);
         Objects.requireNonNull(city1);
         Objects.requireNonNull(city2);
@@ -119,8 +119,9 @@ public class FloydWarshallAlgorithmPathFinder implements PathFinder {
         }
         log.debug("findPaths() - a path includes index cities={}", pathIndexList);
         List<Path> pathList = buildPathsFromIndexes(pathIndexList.get());
-        log.debug("findPaths() - was prepared the next pathList={}", pathList);
-        return Optional.of(pathList);
+        Route route = new Route(pathList);
+        log.debug("findPaths() - was prepared the next route={}", route);
+        return Optional.of(Collections.singletonList(route));
     }
 
     @Override

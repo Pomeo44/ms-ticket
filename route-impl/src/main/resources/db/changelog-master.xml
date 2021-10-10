@@ -1,8 +1,3 @@
-<!--
-  ~ VTB Group. Do not reproduce without permission in writing.
-  ~ Copyright (c) 2021 VTB Group. All rights reserved.
-  -->
-
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

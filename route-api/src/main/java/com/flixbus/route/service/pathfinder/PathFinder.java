@@ -13,9 +13,15 @@ import java.util.Optional;
  */
 public interface PathFinder {
 
-    Optional<List<Path>> findPaths(String city1, String city2);
+    Optional<List<Route>> findRoutes(String city1, String city2);
 
     void refresh();
+
+    @Data
+    @AllArgsConstructor
+    class Route {
+        private List<Path> paths;
+    }
 
     @Data
     @AllArgsConstructor
