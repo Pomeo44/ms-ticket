@@ -5,5 +5,5 @@ image:
   pullPolicy: IfNotPresent
 containerPort: 8080
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 8080
