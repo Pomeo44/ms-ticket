@@ -1,9 +1,15 @@
+application: route
 replicaCount: 2
 image:
   repository: "pomeo44/ms-ticket"
   tag: "1.0"
   pullPolicy: IfNotPresent
-containerPort: 8080
+container:
+  port:
+    http: 8080
+    debug: 5005
 service:
   type: ClusterIP
-  port: 8080
+  port:
+    http: 8080
+    debug: 5005
