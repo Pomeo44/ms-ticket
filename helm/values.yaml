@@ -14,7 +14,7 @@ container:
     - name: DATASOURCE_USER
       valueFrom:
         secretKeyRef:
-          name: roure-db-secret
+          name: route-db-secret
           key: username
     - name: DATASOURCE_PASSWORD
       valueFrom:
