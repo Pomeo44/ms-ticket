@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: route
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        strategy: refresh
+        mode: event

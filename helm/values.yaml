@@ -1,15 +1,47 @@
 application: route
 replicaCount: 2
-image:
-  repository: "pomeo44/ms-ticket"
-  tag: "1.0"
-  pullPolicy: IfNotPresent
 container:
+  image:
+    repository: "pomeo44/ms-ticket"
+    tag: "2"
+    pullPolicy: IfNotPresent
   port:
     http: 8080
     debug: 5005
+  env:
+    - name: DATASOURCE_URL
+      value: jdbc:postgresql://postgres:5432/route
+    - name: DATASOURCE_USER
+      valueFrom:
+        secretKeyRef:
+          name: apigateway-db-secret
+          key: username
+    - name: DATASOURCE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: apigateway-db-secret
+          key: password
 service:
   type: ClusterIP
   port:
     http: 8080
     debug: 5005
+
+livenessProbe:
+  initialDelaySeconds: 60
+  timeoutSeconds: 5
+  periodSeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+  httpGet:
+    path: /actuator/health
+    port: 8080
+readinessProbe:
+  initialDelaySeconds: 60
+  timeoutSeconds: 5
+  periodSeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+  httpGet:
+    path: /actuator/health
+    port: 8080
