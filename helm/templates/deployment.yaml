@@ -28,7 +28,7 @@ spec:
           env:
             - name: "JAVA_OPTS"
               value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
-            {{ - toYaml .Values.container.env | nindent 12 }}
+            {{- toYaml .Values.container.env | nindent 12 }}
           envFrom:
           - prefix: ""
             configMapRef:
