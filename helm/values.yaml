@@ -14,12 +14,12 @@ container:
     - name: DATASOURCE_USER
       valueFrom:
         secretKeyRef:
-          name: apigateway-db-secret
+          name: roure-db-secret
           key: username
     - name: DATASOURCE_PASSWORD
       valueFrom:
         secretKeyRef:
-          name: apigateway-db-secret
+          name: route-db-secret
           key: password
 service:
   type: ClusterIP
