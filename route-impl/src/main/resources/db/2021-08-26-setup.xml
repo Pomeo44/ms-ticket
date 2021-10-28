@@ -26,9 +26,13 @@
     </changeSet>
 
     <changeSet id="add_city_pair" author="Aleksandr_Antipin">
-        <sql>
+        <sql dbms="h2">
+            ALTER TABLE connection ADD id VARCHAR(100) AS
+            case when city1 &lt; city2 then CONCAT(city1, city2) else CONCAT(city2, city1) end UNIQUE NOT NULL;
+        </sql>
+        <sql dbms="postgresql">
             ALTER TABLE connection ADD id VARCHAR(100) GENERATED ALWAYS AS
-            (CASE WHEN city1 &lt; city2 THEN city1||city2 ELSE city2||city1 END) STORED UNIQUE NOT NULL;
+                (CASE WHEN city1 &lt; city2 THEN city1||city2 ELSE city2||city1 END) STORED UNIQUE NOT NULL;
         </sql>
     </changeSet>
 
