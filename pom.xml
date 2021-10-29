@@ -31,6 +31,7 @@
         <jjwt.version>0.9.1</jjwt.version>
         <postgresql.version>42.2.22</postgresql.version>
         <liquibase-maven-plugin>3.8.9</liquibase-maven-plugin>
+        <maven-surefire-plugin>2.21.0</maven-surefire-plugin>
 
         <!-- liquibase plugin properties -->
         <liquibase.host>localhost</liquibase.host>
@@ -118,6 +119,12 @@
                     <configuration>
                         <release>${java.version}</release>
                         <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin}</version>
+                    <configuration>
                     </configuration>
                 </plugin>
             </plugins>
