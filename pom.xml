@@ -29,6 +29,17 @@
         <spring-cloud-starter.version>3.0.4</spring-cloud-starter.version>
         <spring-cloud-starter-kubernetes.version>1.1.10.RELEASE</spring-cloud-starter-kubernetes.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <postgresql.version>42.2.22</postgresql.version>
+        <liquibase-maven-plugin>3.8.9</liquibase-maven-plugin>
+        <maven-surefire-plugin>2.21.0</maven-surefire-plugin>
+
+        <!-- liquibase plugin properties -->
+        <liquibase.host>localhost</liquibase.host>
+        <liquibase.port>5432</liquibase.port>
+        <liquibase.db>route</liquibase.db>
+        <liquibase.schema>route</liquibase.schema>
+        <liquibase.user>route</liquibase.user>
+        <liquibase.password>route</liquibase.password>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -78,6 +89,11 @@
                 <artifactId>jjwt</artifactId>
                 <version>${jjwt.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -103,6 +119,12 @@
                     <configuration>
                         <release>${java.version}</release>
                         <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin}</version>
+                    <configuration>
                     </configuration>
                 </plugin>
             </plugins>

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.flixbus.route.AbstractIntegrationTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.math.BigDecimal;
 
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
  *
  * @author Aleksandr_Antipin
  */
+@WithMockUser
 public class RouteControllerImplTest extends AbstractIntegrationTest {
 
 
@@ -34,7 +36,7 @@ public class RouteControllerImplTest extends AbstractIntegrationTest {
         //500 * 5.659771674 + 800 * 1.414111432 = 2829,885837 + 1131,2891456 = 3961,1749826
         //5 * 10.15811534 + 8 * 5.582751583 = 50,7905767 + 44,662012664 = 95,452589364
         //3961,1749826 + 95,452589364 = 4056,627571964
-        mockMvc.perform(get("/route?cityFrom=Zurich&cityTo=Munich"))
+        mockMvc.perform(get("/bestroute?cityFrom=Zurich&cityTo=Munich"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.num_lines").value(2))
                 .andExpect(jsonPath("$.total_bus_cost").value(BigDecimal.valueOf(3961.17)))
@@ -45,7 +47,7 @@ public class RouteControllerImplTest extends AbstractIntegrationTest {
 
     @Test
     public void cityToNullTest() throws Exception {
-        mockMvc.perform(get("/route?cityFrom=Zurich"))
+        mockMvc.perform(get("/bestroute?cityFrom=Zurich"))
                 .andExpect(status().is(400))
                 .andExpect(jsonPath("$").value("Bad request. cityTo is null"))
                 .andReturn();
@@ -53,7 +55,7 @@ public class RouteControllerImplTest extends AbstractIntegrationTest {
 
     @Test
     public void pathNotExistTest() throws Exception {
-        mockMvc.perform(get("/route?cityFrom=Lisbon&cityTo=Munich"))
+        mockMvc.perform(get("/bestroute?cityFrom=Lisbon&cityTo=Munich"))
                 .andExpect(status().is(400))
                 .andExpect(jsonPath("$").value("Route doesn't exist"))
                 .andReturn();

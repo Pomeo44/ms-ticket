@@ -10,8 +10,5 @@ spec:
     - port: {{ .Values.service.port.http }}
       protocol: TCP
       name: http
-    - port: {{ .Values.service.port.debug }}
-      protocol: TCP
-      name: debug
   selector:
     app: {{ .Values.application }}

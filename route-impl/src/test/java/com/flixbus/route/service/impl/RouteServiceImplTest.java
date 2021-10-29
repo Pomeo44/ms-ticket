@@ -1,7 +1,6 @@
 package com.flixbus.route.service.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -86,11 +85,11 @@ public class RouteServiceImplTest {
         assertNotNull(route);
         assertEquals(Integer.valueOf(2), route.getNumLines());
         //10 * 300 + 20 * 400 = 11000
-        assertEquals(BigDecimal.valueOf(11000), route.getTotalBusCost());
+        assertEquals(0, BigDecimal.valueOf(11000).compareTo(route.getTotalBusCost()));
         //10 * 500 + 20 * 600 = 17000
-        assertEquals(BigDecimal.valueOf(17000), route.getTotalDriverCost());
+        assertEquals(0, BigDecimal.valueOf(17000).compareTo(route.getTotalDriverCost()));
         //11000 + 17000 = 28000
-        assertEquals(BigDecimal.valueOf(28000), route.getTotalCost());
+        assertEquals(0, BigDecimal.valueOf(28000).compareTo(route.getTotalCost()));
 
     }
 
